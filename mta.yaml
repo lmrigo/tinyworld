@@ -1,7 +1,7 @@
 ID: tinyworld
 _schema-version: '2.0'
-description: My little world
-version: 0.0.1
+description: Tiny World Demo
+version: 2.0.0
 modules:
   - name: tinydb
     type: hdb
