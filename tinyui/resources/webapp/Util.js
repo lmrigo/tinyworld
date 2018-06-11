@@ -55,6 +55,55 @@ function openFirstDialog() {
 	}
 }
 
+var oContinentDialog;
+function openContinentDialog() {
+  if (oContinentDialog) {
+     oContinentDialog.open();
+  } else {
+    oContinentDialog = new sap.ui.commons.Dialog({
+      width: "400px", // sap.ui.core.CSSSize
+      height: "550px", // sap.ui.core.CSSSize
+      title: "Continent Details", // string
+      applyContentPadding: true, // boolean
+      modal: true, // boolean
+      content: [new sap.ui.commons.form.SimpleForm({
+        content: [
+          new sap.ui.core.Title({ text: "Continent Name" }),
+          new sap.ui.commons.Label({ text: "continent"}),
+          new sap.ui.commons.TextField({ value: "", id: "continent" })
+        ]
+      })] // sap.ui.core.Control
+    });
+    oContinentDialog.addButton(new sap.ui.commons.Button({
+       text: "OK",
+       press: function() {
+        var continent = sap.ui.getCore().byId("continent").getValue();
+        var payload = {};
+        payload.continent = continent;
+        var insertdata = JSON.stringify(payload);
+        $.ajax({
+          type: "POST",
+          url: "/country/continent.xsjs",
+          contentType: "application/json",
+          data: insertdata,
+          dataType: "json",
+          crossDomain: true,
+          success: function(data) {
+            oContinentDialog.close();
+            sap.ui.getCore().byId("tinytab").getModel().refresh(true);
+            alert("Data inserted successfully");
+          },
+          error: function(data) {
+            var message = JSON.stringify(data);
+            alert(message);
+          }
+        });
+      }
+    }));
+   oContinentDialog.open();
+  }
+}
+
 $(function() {
   // one time fetch of CSRF token
   $.ajax({
