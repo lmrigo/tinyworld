@@ -1,7 +1,7 @@
 ID: tinyworld
 _schema-version: '2.0'
 description: Tiny World Demo
-version: 3.0.0
+version: 4.0.0
 modules:
   - name: tinydb
     type: hdb
@@ -37,3 +37,5 @@ resources:
     type: com.sap.xs.hdi-container
   - name: tiny_uaa
     type: com.sap.xs.uaa
+    parameters:
+      config-path: ./xs-security.json
